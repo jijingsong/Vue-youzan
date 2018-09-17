@@ -9,6 +9,7 @@
         </div>
          <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
+
     </div>
 </template>
 
@@ -26,7 +27,9 @@ export default {
   mounted() {
     new Swiper(".swiper-container", {
       loop: true,
-      pagination: ".swiper-pagination"
+      pagination: {
+        el: ".swiper-pagination"
+      }
     });
   }
 };

@@ -5,7 +5,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import url from 'js/api.js'
 
-import Foot from 'components/Foot.vue'
+// import Foot from 'components/Foot.vue'
+import mixin from 'js/mixin.js'
 
 let app = new Vue({
     el: '#app',
@@ -41,28 +42,24 @@ let app = new Vue({
             axios.post(url.rank).then((res) => {
                 this.rankData = res.data.data
             })
+        },
+        toSearch(list) {
+            location.href = `search.html?keyword=${list.name}&id=${list.id}`
         }
     },
-    components: {
-        Foot
-    },
-    filters: {
-        xx: function (value) {
-            var f = parseFloat(value);
-            if (isNaN(f)) {
-                return false;
-            }
-            var f = Math.round(value * 100) / 100;
-            var s = f.toString();
-            var rs = s.indexOf('.');
-            if (rs < 0) {
-                rs = s.length;
-                s += '.';
-            }
-            while (s.length <= rs + 2) {
-                s += '0';
-            }
-            return s;
-        }
-    }
+    // components: {
+    //     Foot
+    // },
+    // filters: {
+    //     currency: function (price) {
+    //         let priceStr = '' + price
+    //         if(priceStr.indexOf('.') > -1) {
+    //             let arr = priceStr.split('.')
+    //             return arr[0] + '.' + (arr[1] + '0').substr(0,2)
+    //         } else {
+    //             return priceStr + '.00'
+    //         }
+    //     }
+    // }
+    mixins: [mixin]
 })

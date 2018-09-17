@@ -1,15 +1,51 @@
 <template>
     <div class="bottom-nav">
       <ul>
-        <li class="active"><a href="index.html"><i class="icon-home"></i><div>有赞</div></a></li>
-        <li><a href="https://maijia.youzan.com/mars/category"><i class="icon-category"></i><div>分类</div></a></li>
-        <li><a href="https://h5.youzan.com/v2/trade/cart?f_platform=yzapp&amp;source=yzapp"><i class="icon-cart"></i><div>购物车</div></a></li>
-        <li><a href="https://h5.youzan.com/v2/buyer/member"><i class="icon-user"></i><div>我</div></a></li>
+        <li v-for="(list,index) in navConfig" :class="{active:index===curIndex}">
+          <a @click="changeNav(list,index)"><i :class="list.icon"></i><div>{{ list.name }}</div></a></li>
+        
       </ul>
     </div>
 </template>
 
 <script>
+import qs from 'qs'
+
+let {index} = qs.parse(location.search.substr(1))
+
+let navConfig = [{
+        href: "index.html",
+        icon: "icon-home",
+        name: "有赞"
+      },
+      {
+        href: "category.html",
+        icon: "icon-category",
+        name: "分类"
+      },{
+        href: "cart.html",
+        icon: "icon-cart",
+        name: "购物车"
+      },
+      {
+        href: "member.html",
+        icon: "icon-user",
+        name: "我"
+      }]
+
+export default {
+  data() {
+    return {
+      navConfig,
+      curIndex: parseInt(index) || 0
+    }
+  },
+  methods: {
+    changeNav(list, index) {
+      location.href = `${list.href}?index=${index}`
+    }
+  }
+}
 </script>
 
 <style>
@@ -19,7 +55,7 @@
   height: 50px;
   bottom: 0;
   background-color: #fff;
-  /* z-index: 8; */
+  z-index: 9999;
   -o-border-image: url(https://b.yzcdn.cn/v2/image/wap/border-line-2.png) 2
     stretch;
   border-image: url(https://b.yzcdn.cn/v2/image/wap/border-line-2.png) 2 stretch;
